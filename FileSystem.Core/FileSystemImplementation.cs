@@ -96,9 +96,6 @@ namespace FileSystem.Core
                 {
                     int childInode = currentDir.ChildInodes[i];
 
-                    // Defensive: skip self-referential child entries which can
-                    // appear due to corruption or logic errors. Showing the
-                    // current directory as its own child confuses the UI.
                     if (childInode == _currentDirectoryInode) continue;
 
                     var childDir = _directoryManager.GetDirectory(childInode);
@@ -108,7 +105,7 @@ namespace FileSystem.Core
                         result.Add(new FileEntry
                         {
                             Name = childDir.Name,
-                            Size = 0, // Directories don't have size
+                            Size = 0,
                             IsDirectory = true,
                             CreatedDate = childDir.CreatedDate,
                             ModifiedDate = childDir.ModifiedDate,
@@ -127,8 +124,6 @@ namespace FileSystem.Core
 
             var directories = new SimpleList<DirectoryEntry>();
 
-            // Iterative BFS traversal with visited set to avoid recursion and protect
-            // against cycles/corruption that would cause a StackOverflowException.
             var visited = new SimpleSetInt(16);
             var root = _directoryManager.GetDirectory(0);
             if (root == null) return directories;
@@ -183,7 +178,7 @@ namespace FileSystem.Core
             }
             else if (directoryName == "/" || directoryName == "\\")
             {
-                _currentDirectoryInode = 0; // Root
+                _currentDirectoryInode = 0;
                 _currentDirectory = "/";
             }
             else
@@ -291,7 +286,6 @@ namespace FileSystem.Core
                     var fe = _fileManager.GetFileEntry(fInode);
                     if (fe != null && deletedDirectoryInodes.Contains(fe.ParentDirectory))
                     {
-                        // Delete the orphaned file entry and free its blocks
                         _fileManager.DeleteFile(fInode);
                     }
                 }
@@ -354,7 +348,6 @@ namespace FileSystem.Core
                             }
                         }
 
-                        // Remove file entry and clear any directory references
                         try { _fileManager.DeleteFileEntry(journalInode); } catch { }
                         try { _directoryManager.RemoveChildFromDirectory(0, journalInode); } catch { }
                     }
