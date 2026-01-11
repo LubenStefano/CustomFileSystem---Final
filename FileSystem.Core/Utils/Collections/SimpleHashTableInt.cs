@@ -31,7 +31,7 @@ namespace FileSystem.Core.Utils.Collections
         private int BucketIndex(int key)
         {
             var h = HashUtils.HashInt(key);
-            return (h & 0x7fffffff) & (_buckets.Length - 1);
+            return h & 0x7fffffff & (_buckets.Length - 1);
         }
 
         public void Put(int key, TValue value)

@@ -9,3 +9,4 @@ C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\obj\Debug
 C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\obj\Debug\net8.0\refint\FileSystem.Core.dll
 C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\obj\Debug\net8.0\FileSystem.Core.pdb
 C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\obj\Debug\net8.0\ref\FileSystem.Core.dll
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\obj\Debug\net8.0\FileSystem.Core.sourcelink.json

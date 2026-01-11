@@ -67,3 +67,4 @@ C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.GUI\obj\Debug\
 C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.GUI\obj\Debug\net8.0\FileSyst.54AB4418.Up2Date
 C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.GUI\obj\Debug\net8.0\FileSystem.GUI.genruntimeconfig.cache
 C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.GUI\obj\Debug\net8.0\ref\FileSystem.GUI.dll
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.GUI\obj\Debug\net8.0\FileSystem.GUI.sourcelink.json

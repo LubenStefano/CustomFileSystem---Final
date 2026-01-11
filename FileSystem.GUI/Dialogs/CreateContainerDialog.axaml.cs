@@ -25,7 +25,6 @@ namespace FileSystem.GUI.Dialogs
             
             if (cancelButton != null) cancelButton.Click += CancelButton_Click;
 
-            // Update size indicator when values change
             if (blockSizeComboBox != null && totalBlocksNumeric != null && sizeIndicator != null)
             {
                 blockSizeComboBox.SelectionChanged += (s, e) => UpdateSizeIndicator();
@@ -40,7 +39,6 @@ namespace FileSystem.GUI.Dialogs
                 {
                         if (int.TryParse(selectedItem.Content?.ToString(), out int blockSize))
                         {
-                            // NumericUpDown.Value is decimal; do math in decimal to avoid implicit conversions
                             decimal tbvDec = totalBlocksNumeric.Value ?? (decimal)Layout.DefaultTotalBlocks;
                             decimal totalSizeDec = (decimal)blockSize * tbvDec;
                             long totalSize = (long)totalSizeDec;
@@ -59,7 +57,6 @@ namespace FileSystem.GUI.Dialogs
                 SuggestedFileName = "filesystem.bin",
                 FileTypeChoices = new[]
                 {
-                    // Only .bin containers are suggested for creation
                     new FilePickerFileType("Container Files") { Patterns = new[] { "*.bin" } },
                     new FilePickerFileType("All Files") { Patterns = new[] { "*" } }
                 }
@@ -83,7 +80,6 @@ namespace FileSystem.GUI.Dialogs
 
             if (pathTextBox?.Text is not string path || FileSystem.Core.Utils.TextUtils.IsNullOrWhiteSpace(path))
             {
-                // Show error message
                 return;
             }
 

@@ -16,3 +16,4 @@ C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.CLI\obj\Debug\
 C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.CLI\obj\Debug\net8.0\FileSystem.CLI.pdb
 C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.CLI\obj\Debug\net8.0\FileSystem.CLI.genruntimeconfig.cache
 C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.CLI\obj\Debug\net8.0\ref\FileSystem.CLI.dll
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.CLI\obj\Debug\net8.0\FileSystem.CLI.sourcelink.json

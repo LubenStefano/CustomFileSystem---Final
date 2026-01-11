@@ -170,8 +170,7 @@
 
     <!-- Status Bar -->
     <Border Grid.Row="3" Background="LightGray" Padding="5" BorderBrush="Gray" BorderThickness="0,1,0,0">
-      <!-- Use direct bindings to ContainerInfo properties and guard visibility with IsContainerOpen
-           This avoids compile-time DataTemplate type resolution errors in Avalonia XAML. -->
+
       <StackPanel Orientation="Horizontal" Spacing="20" IsVisible="{Binding IsContainerOpen}">
         <TextBlock Text="{Binding ContainerPathText}" />
         <TextBlock Text="{Binding UsedBlocksText}" />

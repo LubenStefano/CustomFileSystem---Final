@@ -63,7 +63,6 @@ namespace FileSystem.Core
             fileEntry.ModifiedDate = DateTime.UtcNow;
             SaveFileEntry(fileInode, fileEntry);
 
-            // Commit: add inode to parent directory now that data+metadata are persisted
             try
             {
                 _directoryManager.AddChildToDirectory(fileEntry.ParentDirectory, fileInode);
@@ -74,9 +73,6 @@ namespace FileSystem.Core
             }
         }
 
-        // ReadFileData removed in favor of block-level helpers like CopyFileOutToPath.
-
-        // Stream file out by reading container blocks directly and writing them to host path
         public void CopyFileOutToPath(int fileInode, string resolvedTargetPath)
         {
             var fileEntry = GetFileEntry(fileInode) ?? throw new ArgumentException("File not found");
@@ -92,7 +88,6 @@ namespace FileSystem.Core
 
                 int toWrite = (int)Math.Min(remaining, bs);
 
-                // Validate checksum for the bytes we will write (handles partial final block)
                 uint stored = _blockTable.GetChecksum(physicalBlock);
                 uint calc = _blockTable.CalculateChecksum(blockData, toWrite);
                 if (stored != calc)
@@ -147,12 +142,12 @@ namespace FileSystem.Core
             string name = Encoding.UTF8.GetString(nameBytes);
 
             if (fs.Position + Layout.FileSizeFieldSize + Layout.IsDirectoryFieldSize + Layout.BlockCountFieldSize > fs.Length) return null;
-            
+
             long size = br.ReadInt64();
             bool isDir = br.ReadBoolean();
             int blockCount = br.ReadInt32();
             var blocks = new SimpleList<int>(blockCount + 2);
-            
+
             for (int i = 0; i < blockCount; i++)
             {
                 if (fs.Position + Layout.BlockIndexFieldSize > fs.Length) break;
@@ -160,10 +155,10 @@ namespace FileSystem.Core
             }
 
             if (fs.Position + Layout.DateTimeFieldSize + Layout.DateTimeFieldSize + Layout.ParentDirectoryFieldSize + Layout.ChecksumFieldSize > fs.Length) return null;
-            
+
             DateTime created = DateTime.FromBinary(br.ReadInt64());
             DateTime modified = DateTime.FromBinary(br.ReadInt64());
-            
+
             int parent = br.ReadInt32();
             uint checksum = br.ReadUInt32();
 
@@ -182,11 +177,9 @@ namespace FileSystem.Core
 
         public void SaveFileEntry(int fileInode, FileEntry fileEntry)
         {
-            // Validate name length
             var nameBytes = Encoding.UTF8.GetBytes(fileEntry.Name ?? "");
             if (nameBytes.Length > Layout.MaxFileNameLength) throw new ArgumentException($"File name too long (max {Layout.MaxFileNameLength} bytes)");
 
-            // Estimate total size of the file entry when serialized
             long estimatedSize = Layout.NameLengthSize + nameBytes.Length
                 + Layout.FileSizeFieldSize + Layout.IsDirectoryFieldSize
                 + Layout.BlockCountFieldSize + (long)(fileEntry.BlockIndices?.Count ?? 0) * Layout.BlockIndexFieldSize
@@ -222,55 +215,54 @@ namespace FileSystem.Core
         {
             using var fs = new FileStream(_containerPath, FileMode.Open, FileAccess.Write);
             using var bw = new BinaryWriter(fs);
-            
+
             long offset = Layout.FileAreaOffset(_totalBlocks) + (fileInode * Layout.FileEntrySize);
-            
+
             fs.Seek(offset, SeekOrigin.Begin);
             bw.Write(0);
         }
 
-        // Expose reservation of a free file slot without writing metadata yet
         public int ReserveFileSlot()
         {
             using var fs = new FileStream(_containerPath, FileMode.Open, FileAccess.Read);
             using var br = new BinaryReader(fs);
-            
+
             for (int i = 0; i < Layout.MaxFiles; i++)
             {
                 long offset = Layout.FileAreaOffset(_totalBlocks) + (i * Layout.FileEntrySize);
-                
+
                 if (offset + Layout.NameLengthSize >= fs.Length) return i;
-                
+
                 fs.Seek(offset, SeekOrigin.Begin);
-                
+
                 int nameLen = br.ReadInt32();
                 if (nameLen == 0) return i;
             }
-            
+
             throw new InvalidOperationException("No free file slots available");
         }
 
         public SimpleList<FileEntry> GetFilesInDirectory(int directoryInode)
         {
             var files = new SimpleList<FileEntry>();
-            
+
             using var fs = new FileStream(_containerPath, FileMode.Open, FileAccess.Read);
             using var br = new BinaryReader(fs);
-            
+
             for (int fileInode = 0; fileInode < Layout.MaxFiles; fileInode++)
             {
                 long offset = Layout.FileAreaOffset(_totalBlocks) + (fileInode * Layout.FileEntrySize);
-                
+
                 if (offset + Layout.NameLengthSize >= fs.Length) break;
-                
+
                 fs.Seek(offset, SeekOrigin.Begin);
-                
+
                 int nameLen = br.ReadInt32();
-                
+
                 if (nameLen <= 0 || nameLen > Layout.MaxFileNameLength) continue;
-                
+
                 var fe = GetFileEntry(fileInode);
-                
+
                 if (fe != null && fe.ParentDirectory == directoryInode && !fe.IsDirectory) files.Add(fe);
             }
             return files;
@@ -279,67 +271,68 @@ namespace FileSystem.Core
         public SimpleList<int> GetFileInodesInDirectory(int directoryInode)
         {
             var fileInodes = new SimpleList<int>();
-            
+
             using var fs = new FileStream(_containerPath, FileMode.Open, FileAccess.Read);
             using var br = new BinaryReader(fs);
-            
+
             for (int fileInode = 0; fileInode < Layout.MaxFiles; fileInode++)
             {
                 long offset = Layout.FileAreaOffset(_totalBlocks) + (fileInode * Layout.FileEntrySize);
-                
+
                 if (offset + Layout.NameLengthSize >= fs.Length) break;
-                
+
                 fs.Seek(offset, SeekOrigin.Begin);
-                
+
                 int nameLen = br.ReadInt32();
-                
+
                 if (nameLen <= 0 || nameLen > Layout.MaxFileNameLength) continue;
-                
+
                 fs.Seek(nameLen, SeekOrigin.Current);
-                
+
                 long size = br.ReadInt64();
                 bool isDir = br.ReadBoolean();
                 int blockCount = br.ReadInt32();
-                
-                for (int i = 0; i < blockCount; i++) {
+
+                for (int i = 0; i < blockCount; i++)
+                {
                     if (fs.Position + Layout.BlockIndexFieldSize > fs.Length) break;
-                    
+
                     fs.Seek(Layout.BlockIndexFieldSize, SeekOrigin.Current);
                 }
-                
+
                 long created = br.ReadInt64();
                 long modified = br.ReadInt64();
                 int parentDirectory = br.ReadInt32();
                 uint checksum = br.ReadUInt32();
-                
+
                 if (!isDir && parentDirectory == directoryInode) fileInodes.Add(fileInode);
             }
-            
+
             return fileInodes;
         }
 
         public SimpleList<int> GetAllFileInodes()
         {
             var list = new SimpleList<int>();
-            
+
             using var fs = new FileStream(_containerPath, FileMode.Open, FileAccess.Read);
             using var br = new BinaryReader(fs);
-            
+
             for (int fileInode = 0; fileInode < Layout.MaxFiles; fileInode++)
             {
                 long offset = Layout.FileAreaOffset(_totalBlocks) + (fileInode * Layout.FileEntrySize);
-                
+
                 if (offset + Layout.NameLengthSize >= fs.Length) break;
-                
+
                 fs.Seek(offset, SeekOrigin.Begin);
-                
+
                 int nameLen = br.ReadInt32();
-                
+
                 if (nameLen == 0 || nameLen > Layout.MaxFileNameLength) continue;
-                
+
                 list.Add(fileInode);
             }
-            
+
             return list;
         }
 
@@ -348,12 +341,13 @@ namespace FileSystem.Core
             for (int fileInode = Layout.MaxFiles - 1; fileInode >= 0; fileInode--)
             {
                 var entry = GetFileEntry(fileInode);
-                
-                if (entry != null && entry.Name == fileName && entry.ParentDirectory == directoryInode && !entry.IsDirectory) {
+
+                if (entry != null && entry.Name == fileName && entry.ParentDirectory == directoryInode && !entry.IsDirectory)
+                {
                     return fileInode;
                 }
             }
-            
+
             return -1;
         }
     }

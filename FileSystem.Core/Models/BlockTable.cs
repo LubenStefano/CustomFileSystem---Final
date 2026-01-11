@@ -45,9 +45,9 @@ namespace FileSystem.Core
 
             fs.Seek(TableOffset + blockIndex * EntrySize, SeekOrigin.Begin);
 
-            bw.Write((byte)1);  // mark used
-            bw.Write(1);        // refcount = 1
-            bw.Write((uint)0);  // checksum = set later
+            bw.Write((byte)1);  // isUsed
+            bw.Write(1);        // refcount
+            bw.Write((uint)0);  // later checksum
 
             bw.Flush();
             fs.Flush();
@@ -60,9 +60,9 @@ namespace FileSystem.Core
 
             fs.Seek(TableOffset + blockIndex * EntrySize, SeekOrigin.Begin);
 
-            bw.Write((byte)0);  // mark as free
-            bw.Write(0);        // refcount = 0
-            bw.Write((uint)0);  // checksum = 0
+            bw.Write((byte)0);
+            bw.Write(0);
+            bw.Write((uint)0);
 
             bw.Flush();
             fs.Flush();
@@ -73,7 +73,7 @@ namespace FileSystem.Core
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.Write);
             using var bw = new BinaryWriter(fs);
 
-            fs.Seek(TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryChecksumOffset, SeekOrigin.Begin); // Skip IsUsed + RefCount
+            fs.Seek(TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryChecksumOffset, SeekOrigin.Begin);
 
             bw.Write(checksum);
             bw.Flush();
@@ -86,7 +86,7 @@ namespace FileSystem.Core
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.Read);
             using var br = new BinaryReader(fs);
 
-            fs.Seek(TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryRefCountOffset, SeekOrigin.Begin); // after IsUsed
+            fs.Seek(TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryRefCountOffset, SeekOrigin.Begin);
 
             return br.ReadInt32();
         }
@@ -124,7 +124,6 @@ namespace FileSystem.Core
             return updated;
         }
 
-        // Find a block that has identical data (compare up to provided length) and same checksum
         public int FindBlockByChecksumAndData(uint checksum, byte[] data, int validLength)
         {
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.Read);
@@ -144,7 +143,6 @@ namespace FileSystem.Core
 
                 if (isUsed == 1 && refCount > 0 && storedChecksum == checksum)
                 {
-                    // Read block data and compare
                     long dataPos = GetDataOffset(i);
 
                     if (dataPos + validLength > fs.Length) continue;
@@ -186,13 +184,11 @@ namespace FileSystem.Core
             {
                 long seekPos = TableOffset + i * EntrySize;
 
-                // Check if we're beyond file bounds
                 if (seekPos >= fs.Length)
                     break;
 
                 fs.Seek(seekPos, SeekOrigin.Begin);
 
-                // Check if we can read at least 1 byte
                 if (fs.Position >= fs.Length)
                     break;
 
@@ -227,7 +223,6 @@ namespace FileSystem.Core
 
             long dataOffset = GetDataOffset(blockIndex);
 
-            // Check if we're trying to read beyond file bounds
             if (dataOffset >= fs.Length) return new byte[_blockSize];
 
             fs.Seek(dataOffset, SeekOrigin.Begin);
@@ -235,7 +230,6 @@ namespace FileSystem.Core
             byte[] buffer = new byte[_blockSize];
             int bytesRead = fs.Read(buffer, 0, _blockSize);
 
-            // If we read less than block size, fill the rest with zeros
             if (bytesRead < _blockSize)
             {
                 for (int i = bytesRead; i < _blockSize; i++)
@@ -269,9 +263,9 @@ namespace FileSystem.Core
             {
                 fs.Seek(TableOffset + i * EntrySize, SeekOrigin.Begin);
 
-                bw.Write((byte)0);  // IsUsed = false
-                bw.Write(0);        // RefCount = 0
-                bw.Write((uint)0);  // Checksum = 0
+                bw.Write((byte)0);
+                bw.Write(0);
+                bw.Write((uint)0);
             }
         }
     }

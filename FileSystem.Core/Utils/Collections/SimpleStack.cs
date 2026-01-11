@@ -52,7 +52,7 @@ namespace FileSystem.Core.Utils.Collections
             var n = new T[size];
 
             Array.Copy(_items, n, Count);
-            
+
             _items = n;
         }
     }

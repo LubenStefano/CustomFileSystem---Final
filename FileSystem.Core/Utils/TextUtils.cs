@@ -98,7 +98,7 @@ namespace FileSystem.Core.Utils
 
         public static bool StartsWith(string s, string prefix)
         {
-            if (s == null || prefix == null || prefix.Length > s.Length ) return false;
+            if (s == null || prefix == null || prefix.Length > s.Length) return false;
 
             for (int i = 0; i < prefix.Length; i++)
             {
@@ -114,7 +114,7 @@ namespace FileSystem.Core.Utils
         public static string Substring(string s, int start, int length)
         {
             if (s == null || length <= 0 || start >= s.Length) return "";
-            
+
             if (start < 0) start = 0;
 
             int max = s.Length - start;
@@ -187,16 +187,14 @@ namespace FileSystem.Core.Utils
             return new string(buf);
         }
 
-        // Path helpers (lightweight, avoid System.IO.Path usage in core logic)
         public static bool IsPathRooted(string? path)
         {
             if (IsNullOrEmpty(path)) return false;
 
-            // UNC or absolute on Unix
-            if (StartsWith(path!, "\\\\") ) return true;
+            if (StartsWith(path!, "\\\\")) return true;
 
             if (StartsWith(path!, "/") || StartsWith(path!, "\\")) return true;
-            // Drive letter on Windows e.g. C:\\
+
             if (path!.Length >= 2 && path[1] == ':') return true;
 
             return false;
@@ -229,7 +227,6 @@ namespace FileSystem.Core.Utils
             if (IsNullOrEmpty(b)) return a ?? "";
             if (IsPathRooted(b)) return b!;
 
-            // choose separator based on existing path
             char sep = '/';
             for (int i = 0; i < a!.Length; i++)
             {

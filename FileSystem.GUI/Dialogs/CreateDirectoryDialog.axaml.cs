@@ -17,7 +17,6 @@ namespace FileSystem.GUI.Dialogs
             
             if (cancelButton != null) cancelButton.Click += CancelButton_Click;
 
-            // Focus the text box
             directoryNameTextBox?.Focus();
         }
 

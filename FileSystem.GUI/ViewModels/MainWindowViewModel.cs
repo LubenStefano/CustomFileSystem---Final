@@ -22,7 +22,6 @@ namespace FileSystem.GUI.ViewModels
         private string _statusMessage = "Ready";
         private FileItemViewModel? _selectedFile;
         private DirectoryNodeViewModel? _selectedDirectory;
-        // Navigation history stacks for back/forward navigation
         private readonly SimpleStack<string> _backHistory = new SimpleStack<string>();
         private readonly SimpleStack<string> _forwardHistory = new SimpleStack<string>();
 
@@ -33,7 +32,6 @@ namespace FileSystem.GUI.ViewModels
             Files = new ObservableCollection<FileItemViewModel>();
             DirectoryTree = new ObservableCollection<DirectoryNodeViewModel>();
 
-            // Initialize commands
             OpenContainerCommand = new RelayCommand(OpenContainer);
             CreateContainerCommand = new RelayCommand(CreateContainer);
             CopyInCommand = new RelayCommand(CopyFileIn, () => IsContainerOpen);
@@ -96,13 +94,7 @@ namespace FileSystem.GUI.ViewModels
         public DirectoryNodeViewModel? SelectedDirectory
         {
             get => _selectedDirectory;
-            set
-            {
-                if (SetProperty(ref _selectedDirectory, value))
-                {
-                    // Selection is managed by the view; navigation happens via double-click / OpenCommand.
-                }
-            }
+            set { }
         }
 
         public string StatusMessage
@@ -117,7 +109,6 @@ namespace FileSystem.GUI.ViewModels
 
         public bool IsEmpty => Files.Count == 0;
 
-        // Safe view-friendly status texts to avoid null bindings in XAML
         private string _containerPathText = "";
         private string _usedBlocksText = "";
         private string _freeBlocksText = "";
@@ -147,7 +138,6 @@ namespace FileSystem.GUI.ViewModels
             set => SetProperty(ref _blockSizeText, value);
         }
 
-        // Commands
         public RelayCommand OpenContainerCommand { get; }
         public RelayCommand CreateContainerCommand { get; }
         public RelayCommand CopyInCommand { get; }
@@ -253,16 +243,10 @@ namespace FileSystem.GUI.ViewModels
 
                     if (!TextUtils.IsNullOrEmpty(sourcePath) && !TextUtils.IsNullOrEmpty(fileName))
                     {
-                        // If a directory node is selected, attempt to change into it first using the full path
                         if (SelectedDirectory != null)
                         {
-                            try
-                            {
-                                ChangeDirectoryByFullPath(SelectedDirectory.FullPath);
-                                // Ensure underlying current path is refreshed before performing copy
-                                await RefreshView();
-                            }
-                            catch { /* ignore navigation errors */ }
+                            ChangeDirectoryByFullPath(SelectedDirectory.FullPath);
+                            await RefreshView();
                         }
 
                         _fileSystemAPI.CopyFileIn(sourcePath!, fileName!);
@@ -365,7 +349,6 @@ namespace FileSystem.GUI.ViewModels
                     }
                     try
                     {
-                        // If a directory node is selected and it's not the current path, change into it first
                         if (SelectedDirectory != null && SelectedDirectory.FullPath != CurrentPath)
                         {
                             ChangeDirectoryByFullPath(SelectedDirectory.FullPath);
@@ -377,7 +360,6 @@ namespace FileSystem.GUI.ViewModels
                     }
                     catch (Exception ex)
                     {
-                        // Surface error to status so user can see why creation failed
                         StatusMessage = $"Error creating directory: {ex.Message}";
                     }
                 }
@@ -402,11 +384,9 @@ namespace FileSystem.GUI.ViewModels
 
             try
             {
-                // Update current path and container info first so tree build uses correct path
                 ContainerInfo = _fileSystemAPI.GetContainerInfo();
                 CurrentPath = _fileSystemAPI.GetCurrentPath();
 
-                // Populate safe status texts for XAML bindings
                 if (ContainerInfo != null)
                 {
                     ContainerPathText = $"Container: {ContainerInfo.Path}";
@@ -424,11 +404,11 @@ namespace FileSystem.GUI.ViewModels
 
                 var files = _fileSystemAPI.ListCurrentDirectory();
                 Files.Clear();
-                // Manual sort: directories first, then by name (insertion sort)
+
                 var count = files.Count;
                 var arr = new FileEntry[count];
                 for (int i = 0; i < count; i++) arr[i] = files[i];
-                // insertion sort
+
                 for (int i = 1; i < count; i++)
                 {
                     var key = arr[i];
@@ -448,7 +428,6 @@ namespace FileSystem.GUI.ViewModels
                 }
                 for (int i = 0; i < count; i++) Files.Add(new FileItemViewModel(arr[i]));
 
-                // Rebuild the directory tree view for the current directory
                 BuildDirectoryTreeFromCurrentFiles();
 
                 OnPropertyChanged(nameof(IsEmpty));
@@ -508,11 +487,12 @@ namespace FileSystem.GUI.ViewModels
                         parts.Add(current.Name);
                         current = parent;
                     }
-                    // Reverse SimpleList
+
                     var rev = new SimpleList<string>(parts.Count);
                     for (int i = parts.Count - 1; i >= 0; i--) rev.Add(parts[i]);
-                    // Join
+
                     string joined = "";
+
                     for (int i = 0; i < rev.Count; i++)
                     {
                         if (i > 0) joined += "/";
@@ -521,9 +501,9 @@ namespace FileSystem.GUI.ViewModels
                     return "/" + joined;
                 }
 
-                // BFS to build tree iteratively and avoid recursion
                 var visited = new SimpleSetInt(directories.Count + 4);
                 DirectoryEntry? rootEntry = null;
+
                 if (lookup.ContainsKey(0)) { lookup.TryGet(0, out var re); rootEntry = re; }
                 else if (directories.Count > 0) rootEntry = directories[0];
                 else rootEntry = null;
@@ -550,14 +530,13 @@ namespace FileSystem.GUI.ViewModels
                     var tuple = queue.Dequeue();
                     var entry = tuple.entry;
                     var node = tuple.node;
-                    // build children
+
                     for (int ci = 0; ci < entry.ChildInodes.Count; ci++)
                     {
                         int childInode = entry.ChildInodes[ci];
                         if (!lookup.TryGet(childInode, out var childEntry)) continue;
                         if (visited.Contains(childEntry.InodeIndex))
                         {
-                            // skip cycles
                             continue;
                         }
 
@@ -574,7 +553,6 @@ namespace FileSystem.GUI.ViewModels
                         queue.Enqueue((childEntry, childNode));
                     }
 
-                    // Pre-expand node if it is ancestor of current path
                     if (!TextUtils.IsNullOrEmpty(node.FullPath) && (node.FullPath == "/" || TextUtils.StartsWith(CurrentPath, node.FullPath + "/") || TextUtils.EqualsOrdinal(CurrentPath, node.FullPath)))
                     {
                         node.IsExpanded = true;
@@ -626,12 +604,10 @@ namespace FileSystem.GUI.ViewModels
             }
         }
 
-        // Public helper to navigate to a directory by name (used by the view)
         public async Task NavigateToDirectory(string directoryName)
         {
             try
             {
-                // Record history
                 if (!TextUtils.IsNullOrEmpty(CurrentPath))
                 {
                     _backHistory.Push(CurrentPath);
@@ -675,7 +651,6 @@ namespace FileSystem.GUI.ViewModels
 
         private void ChangeDirectoryByFullPath(string directoryName)
         {
-            // Support full absolute paths like "/a/b" as well as relative names and special tokens
             if (TextUtils.IsNullOrWhiteSpace(directoryName)) return;
 
             if (directoryName == "/")
@@ -684,7 +659,6 @@ namespace FileSystem.GUI.ViewModels
             }
             else if (TextUtils.StartsWith(directoryName, "/"))
             {
-                // Absolute path: step from root through each segment
                 _fileSystemAPI.ChangeDirectory("/");
                 var parts = TextUtils.Split(directoryName, '/', true);
                 for (int i = 0; i < parts.Count; i++)
@@ -694,7 +668,6 @@ namespace FileSystem.GUI.ViewModels
             }
             else
             {
-                // Relative name or special tokens like ".."
                 _fileSystemAPI.ChangeDirectory(directoryName);
             }
         }
@@ -710,13 +683,9 @@ namespace FileSystem.GUI.ViewModels
 
         private Task<MessageBoxResult> ShowMessageBox(Window parent, string title, string message, MessageBoxButtons buttons)
         {
-            // Simple implementation - in a real app you'd want a proper MessageBox dialog
-            // For now, return Yes to allow operations to proceed
             return Task.FromResult(MessageBoxResult.Yes);
         }
     }
-
-    // `FileItemViewModel` and `DirectoryNodeViewModel` were moved to their own files
 
     public enum MessageBoxButtons
     {

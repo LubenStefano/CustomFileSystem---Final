@@ -10,67 +10,77 @@ class Program
     {
         Console.WriteLine("=== Custom File System CLI ===");
         Console.WriteLine("Type 'help' for available commands or 'exit' to quit.");
-        
-        // Initialize file system
+
         _fileSystem = new FileSystemImplementation();
 
-        // Ask user whether to create a new container or open an existing one
         Console.Write("Create new container or open existing? (n = new, o = open) [o]: ");
+
         var modeInput = Console.ReadLine();
         var mode = TextUtils.IsNullOrWhiteSpace(modeInput) ? "o" : TextUtils.ToLower(TextUtils.Trim(modeInput ?? ""));
 
         if (mode == "n" || mode == "new")
         {
             Console.Write($"Enter path for new container (default {_containerPath}): ");
+
             var path = Console.ReadLine();
             path = TextUtils.IsNullOrWhiteSpace(path) ? _containerPath : TextUtils.Trim(path ?? "");
 
             Console.Write($"Enter block size in bytes (default {Layout.DefaultBlockSize}): ");
+
             var bsInput = Console.ReadLine();
             int blockSize = Layout.DefaultBlockSize;
+
             if (!TextUtils.IsNullOrWhiteSpace(bsInput) && int.TryParse(TextUtils.Trim(bsInput ?? ""), out var bs)) blockSize = bs;
 
             Console.Write($"Enter total blocks (default {Layout.DefaultTotalBlocks}): ");
+
             var tbInput = Console.ReadLine();
             int totalBlocks = Layout.DefaultTotalBlocks;
+
             if (!TextUtils.IsNullOrWhiteSpace(tbInput) && int.TryParse(TextUtils.Trim(tbInput ?? ""), out var tb)) totalBlocks = tb;
 
             Console.WriteLine($"Creating container: {path} (blockSize={blockSize}, totalBlocks={totalBlocks})");
+
             _fileSystem.CreateContainer(path, blockSize, totalBlocks);
             _containerPath = path;
+
             Console.WriteLine("Container created successfully.");
         }
         else
         {
             Console.Write($"Enter path to existing container (default {_containerPath}): ");
+
             var path = Console.ReadLine();
             path = TextUtils.IsNullOrWhiteSpace(path) ? _containerPath : TextUtils.Trim(path ?? "");
 
             if (!File.Exists(path))
             {
                 Console.WriteLine($"Container not found: {path}. Creating new container with defaults.");
+
                 _fileSystem.CreateContainer(path, Layout.DefaultBlockSize, Layout.DefaultTotalBlocks);
                 _containerPath = path;
+
                 Console.WriteLine("Container created successfully.");
             }
             else
             {
                 Console.WriteLine($"Opening existing container: {path}");
+
                 _fileSystem.OpenContainer(path);
                 _containerPath = path;
+
                 Console.WriteLine("Container opened successfully.");
             }
         }
 
-        // Command loop
         while (true)
         {
             Console.Write($"{_fileSystem.GetCurrentPath()}> ");
             string? input = Console.ReadLine();
-            
+
             if (TextUtils.IsNullOrWhiteSpace(input))
                 continue;
-                
+
             try
             {
                 var cleaned = TextUtils.Trim(input ?? "");
@@ -152,7 +162,7 @@ class Program
         if (TextUtils.IsNullOrEmpty(input)) return parts.ToArray();
 
         bool inQuotes = false;
-        // Use a char buffer sized to the input length to avoid allocations from StringBuilder
+
         char[] buffer = new char[input.Length];
         int bidx = 0;
 
@@ -212,8 +222,6 @@ class Program
 
         var files = _fileSystem.ListCurrentDirectory();
 
-        Console.WriteLine($"DEBUG: Found {files.Count} items in directory");
-
         if (files.Count == 0)
         {
             Console.WriteLine("Directory is empty.");
@@ -227,7 +235,7 @@ class Program
         {
             var file = files[i];
             string type = file.IsDirectory ? "<DIR>" : $"{file.Size}B";
-                Console.WriteLine($"{file.Name,-15}\t{type,-10}\t{(file.IsDirectory ? "Directory" : "File")}");
+            Console.WriteLine($"{file.Name,-15}\t{type,-10}\t{(file.IsDirectory ? "Directory" : "File")}");
         }
         Console.WriteLine();
     }
@@ -249,6 +257,7 @@ class Program
             Console.WriteLine($"Source file '{sourcePath}' does not exist.");
             return;
         }
+
         try
         {
             Console.WriteLine($"Copying '{sourcePath}' to container as '{targetName}'...");
@@ -326,16 +335,6 @@ class Program
             Console.WriteLine($"Creating directory '{directoryName}'...");
             _fileSystem.CreateDirectory(directoryName);
             Console.WriteLine("Directory created successfully.");
-
-            // Debug: Check if it was actually added
-            Console.WriteLine("DEBUG: Checking directory list after creation:");
-            var files = _fileSystem.ListCurrentDirectory();
-            Console.WriteLine($"DEBUG: Now have {files.Count} items total");
-            for (int i = 0; i < files.Count; i++)
-            {
-                var item = files[i];
-                Console.WriteLine($"DEBUG: - {item.Name} ({(item.IsDirectory ? "DIR" : "FILE")})");
-            }
         }
         catch (Exception ex)
         {

@@ -14,7 +14,6 @@ public partial class MainWindow : Window
         var tree = this.FindControl<TreeView>("DirectoryTreeView");
         if (tree != null)
         {
-            // Keep ViewModel selection in sync but do not navigate on selection to avoid recursive navigation
             tree.SelectionChanged += (s, e) =>
             {
                 if (DataContext is MainWindowViewModel vm && tree.SelectedItem is DirectoryNodeViewModel selected)
@@ -23,7 +22,6 @@ public partial class MainWindow : Window
                 }
             };
 
-            // Navigate on double-click only
             tree.DoubleTapped += async (s, e) =>
             {
                 if (DataContext is MainWindowViewModel vm && tree.SelectedItem is DirectoryNodeViewModel selected)
@@ -32,7 +30,7 @@ public partial class MainWindow : Window
                 }
             };
         }
-        // Wire up file list double-click handler (list defined in XAML)
+
         var list = this.FindControl<ListBox>("FileListView");
         if (list != null)
         {
@@ -40,7 +38,6 @@ public partial class MainWindow : Window
             {
                 if (DataContext is MainWindowViewModel vm && vm.SelectedFile != null && vm.SelectedFile.IsDirectory)
                 {
-                    // Build container path using '/' separators (container paths are Unix-like)
                     var name = vm.SelectedFile.Name ?? "";
                     string fullPath;
                     if (Core.Utils.TextUtils.StartsWith(name, "/") || Core.Utils.TextUtils.StartsWith(name, "\\"))

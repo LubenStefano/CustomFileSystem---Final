@@ -17,96 +17,78 @@ namespace FileSystem.Core
 
         public DirectoryEntry? GetDirectory(int inodeIndex)
         {
-            // Validate inodeIndex
             if (inodeIndex < 0 || inodeIndex >= Layout.MaxDirectories) return null;
 
-            Console.WriteLine($"DEBUG: Loading directory with inode {inodeIndex}");
-
-            // Special case for root directory
             if (inodeIndex == 0)
             {
                 using var fs = new FileStream(_containerPath, FileMode.Open, FileAccess.Read);
                 using var br = new BinaryReader(fs);
 
-                long offset = Layout.DirectoryAreaOffset(_totalBlocks); // Root is at offset 0 in directory area
-                
-                Console.WriteLine($"DEBUG: Root directory offset: {offset}, file length: {fs.Length}");
-                
+                long offset = Layout.DirectoryAreaOffset(_totalBlocks);
+
+
                 if (offset >= fs.Length)
                 {
-                    Console.WriteLine("DEBUG: Root directory offset exceeds file length");
                     return null;
                 }
-                    
+
                 fs.Seek(offset, SeekOrigin.Begin);
 
                 int nameLength;
                 try
                 {
                     nameLength = br.ReadInt32();
-                    Console.WriteLine($"DEBUG: Root directory name length: {nameLength}");
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Console.WriteLine($"DEBUG: Error reading root directory name length: {ex.Message}");
                     return null;
                 }
-                
-                // For root directory, accept nameLength == 1 (for "/") or 0 (uninitialized)
-                // Treat obviously invalid values as uninitialized
+
+
                 if (nameLength < 0 || nameLength > Layout.MaxDirectoryNameLength || nameLength == 0)
                 {
-                    Console.WriteLine($"DEBUG: Root directory appears uninitialized (name length: {nameLength})");
-                    return null; // Let the caller handle initialization
+                    return null;
                 }
 
-                // Read initialized root directory
                 try
                 {
                     if (fs.Position + nameLength > fs.Length)
                     {
-                        Console.WriteLine("DEBUG: Not enough data for root directory name");
                         return null;
                     }
 
                     byte[] nameBytes = br.ReadBytes(nameLength);
                     string name = Encoding.UTF8.GetString(nameBytes);
-                    
+
                     if (fs.Position + Layout.DirectoryMetadataSize > fs.Length)
                     {
-                        Console.WriteLine("DEBUG: Not enough data for root directory metadata");
                         return null;
                     }
-                        
+
                     int parentInode = br.ReadInt32();
 
                     DateTime createdDate = DateTime.FromBinary(br.ReadInt64());
                     DateTime modifiedDate = DateTime.FromBinary(br.ReadInt64());
-                    
+
                     int childCount = br.ReadInt32();
-                    
-                    if (childCount < 0 || childCount > Layout.MaxChildrenPerDirectory) 
+
+                    if (childCount < 0 || childCount > Layout.MaxChildrenPerDirectory)
                     {
-                        Console.WriteLine($"DEBUG: Invalid root directory child count: {childCount}");
                         return null;
                     }
-                    
-                    Console.WriteLine($"DEBUG: Root directory has {childCount} children recorded");
-                    
+
                     var childInodes = new SimpleList<int>();
-                    // Use same logic as non-root directories - read child slots and filter
                     for (int i = 0; i < Layout.MaxChildrenPerDirectory; i++)
                     {
                         if (fs.Position + Layout.ChildInodeFieldSize > fs.Length) break;
+
                         int childInode = br.ReadInt32();
+
                         if (i < childCount && childInode != -1)
                         {
                             childInodes.Add(childInode);
-                            Console.WriteLine($"DEBUG: Root child {i}: {childInode}");
                         }
                     }
-
-                    Console.WriteLine($"DEBUG: Root directory loaded with {childInodes.Count} valid children");
 
                     return new DirectoryEntry
                     {
@@ -119,14 +101,12 @@ namespace FileSystem.Core
                         ModifiedDate = modifiedDate
                     };
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    Console.WriteLine($"DEBUG: Error reading root directory data: {ex.Message}");
                     return null;
                 }
             }
 
-            // Handle non-root directories (unchanged)
             using var fs2 = new FileStream(_containerPath, FileMode.Open, FileAccess.Read);
             using var br2 = new BinaryReader(fs2);
 
@@ -153,7 +133,6 @@ namespace FileSystem.Core
             int childCount2 = br2.ReadInt32();
             if (childCount2 < 0 || childCount2 > Layout.MaxChildrenPerDirectory) return null;
 
-            Console.WriteLine($"DEBUG: Directory '{name2}' (inode {inodeIndex}) has {childCount2} children recorded");
 
             var childInodes2 = new SimpleList<int>();
 
@@ -166,11 +145,8 @@ namespace FileSystem.Core
                 if (i < childCount2 && childInode != -1)
                 {
                     childInodes2.Add(childInode);
-                    Console.WriteLine($"DEBUG: Child {i}: {childInode}");
                 }
             }
-
-            Console.WriteLine($"DEBUG: Directory '{name2}' loaded with {childInodes2.Count} valid children");
 
             return new DirectoryEntry
             {
@@ -186,7 +162,7 @@ namespace FileSystem.Core
 
         public int CreateDirectory(string name, int parentInode)
         {
-            int newInode = FindFreeDirectorySlot();    
+            int newInode = FindFreeDirectorySlot();
             if (newInode == -1) throw new InvalidOperationException("No free directory slots available");
 
             var newDir = new DirectoryEntry
@@ -203,9 +179,6 @@ namespace FileSystem.Core
             SaveDirectory(newDir);
 
             AddChildToDirectory(parentInode, newInode);
-
-            // Debug: Log creation
-            Console.WriteLine($"DEBUG: Created directory '{name}' with inode {newInode} under parent {parentInode}");
 
             return newInode;
         }
@@ -231,7 +204,6 @@ namespace FileSystem.Core
             bw.Write(directory.CreatedDate.ToBinary());
             bw.Write(directory.ModifiedDate.ToBinary());
 
-            // Always write child slots, fill unused with -1 for consistency
             int childCount = directory.ChildInodes.Count;
             bw.Write(childCount);
 
@@ -254,8 +226,7 @@ namespace FileSystem.Core
 
             long offset = Layout.DirectoryAreaOffset(_totalBlocks) + (inodeIndex * Layout.DirectoryEntrySize);
             fs.Seek(offset, SeekOrigin.Begin);
-            
-            // Mark as deleted by writing 0 length name
+
             bw.Write(0);
         }
 
@@ -271,66 +242,56 @@ namespace FileSystem.Core
                 if (offset >= fs.Length) break;
 
                 fs.Seek(offset, SeekOrigin.Begin);
-                
+
                 int nameLength = br.ReadInt32();
 
                 if (nameLength == 0) return i;
             }
-            
+
             throw new InvalidOperationException("No free directory slots available");
         }
 
         public void AddChildToDirectory(int parentInode, int childInode)
         {
-            if (parentInode < 0 || parentInode >= Layout.MaxDirectories|| childInode < 0 || childInode >= Layout.MaxDirectories) return;
+            if (parentInode < 0 || parentInode >= Layout.MaxDirectories || childInode < 0 || childInode >= Layout.MaxDirectories) return;
 
-            Console.WriteLine($"DEBUG: Adding child {childInode} to parent {parentInode}");
-            
             var parentDir = GetDirectory(parentInode);
 
             if (parentDir != null)
             {
-                Console.WriteLine($"DEBUG: Parent directory '{parentDir.Name}' currently has {parentDir.ChildInodes.Count} children");
-                
-                // Prevent duplicate child entries
                 if (parentDir.ChildInodes.IndexOf(childInode) < 0)
                 {
                     parentDir.ChildInodes.Add(childInode);
                     parentDir.ModifiedDate = DateTime.UtcNow;
-                    
-                    Console.WriteLine($"DEBUG: Added child {childInode}, parent now has {parentDir.ChildInodes.Count} children");
-                    // Build child list string
+
                     string cl = "";
                     for (int ci = 0; ci < parentDir.ChildInodes.Count; ci++)
                     {
                         if (ci > 0) cl += ", ";
                         cl += parentDir.ChildInodes[ci].ToString();
                     }
-                    Console.WriteLine($"DEBUG: Child list: [{cl}]");
-                    
+
                     SaveDirectory(parentDir);
-                    
-                    Console.WriteLine($"DEBUG: Saved parent directory, verifying...");
+
                     var verifyDir = GetDirectory(parentInode);
                     if (verifyDir != null)
-                        {
+                    {
                         string clv = "";
                         for (int ci = 0; ci < verifyDir.ChildInodes.Count; ci++)
                         {
                             if (ci > 0) clv += ", ";
                             clv += verifyDir.ChildInodes[ci].ToString();
                         }
-                        Console.WriteLine($"DEBUG: Verification - parent now shows {verifyDir.ChildInodes.Count} children: [{clv}]");
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"DEBUG: Child {childInode} already exists in parent {parentInode}");
+                    Console.WriteLine($"Child {childInode} already exists in parent {parentInode}");
                 }
             }
             else
             {
-                Console.WriteLine($"DEBUG: Could not load parent directory {parentInode}");
+                Console.WriteLine($"Could not load parent directory {parentInode}");
             }
         }
 
@@ -365,26 +326,22 @@ namespace FileSystem.Core
                     return childInode;
                 }
             }
-            
+
             return -1;
         }
 
         public void InitializeRootDirectory()
         {
-            Console.WriteLine("DEBUG: Initializing root directory");
-            
-            // Ensure container file has enough space
             using var fs = new FileStream(_containerPath, FileMode.Open, FileAccess.ReadWrite);
 
-            long requiredSize = Layout.DirectoryAreaOffset(_totalBlocks) + Layout.DirectoryAreaSize; // Space for all directory slots
-            
+            long requiredSize = Layout.DirectoryAreaOffset(_totalBlocks) + Layout.DirectoryAreaSize;
+
             if (fs.Length < requiredSize)
             {
-                Console.WriteLine($"DEBUG: Expanding container file from {fs.Length} to {requiredSize} bytes");
                 fs.SetLength(requiredSize);
             }
             fs.Close();
-            
+
             var rootDir = new DirectoryEntry
             {
                 Name = "/",
@@ -395,21 +352,8 @@ namespace FileSystem.Core
                 CreatedDate = DateTime.UtcNow,
                 ModifiedDate = DateTime.UtcNow
             };
-            
-            Console.WriteLine("DEBUG: Saving root directory");
+
             SaveDirectory(rootDir);
-            
-            // Verify the save worked
-            Console.WriteLine("DEBUG: Verifying root directory save");
-            var verifyRoot = GetDirectory(0);
-            if (verifyRoot != null)
-            {
-                Console.WriteLine($"DEBUG: Root directory verified - name: '{verifyRoot.Name}', children: {verifyRoot.ChildInodes.Count}");
-            }
-            else
-            {
-                Console.WriteLine("DEBUG: Failed to verify root directory save");
-            }
         }
     }
 }
