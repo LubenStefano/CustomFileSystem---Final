@@ -1,0 +1,47 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"build",
+				"${workspaceFolder}/FileSystem.CLI/FileSystem.CLI.csproj",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary"
+			],
+			"problemMatcher": "$msCompile",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "Build FileSystem.CLI",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"build",
+				"FileSystem.CLI/FileSystem.CLI.csproj"
+			],
+			"group": "build",
+			"problemMatcher": [
+				"$msCompile"
+			]
+		},
+		{
+			"label": "Run FileSystem.CLI",
+			"type": "shell",
+			"command": "dotnet",
+			"args": [
+				"run",
+				"--project",
+				"FileSystem.CLI"
+			],
+			"group": "test",
+			"dependsOn": "build",
+			"problemMatcher": []
+		}
+	]
+}

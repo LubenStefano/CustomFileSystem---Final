@@ -1,0 +1,183 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:FileSystem.GUI.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="800"
+        x:Class="FileSystem.GUI.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Custom File System Explorer"
+        WindowStartupLocation="CenterScreen">
+
+  <Design.DataContext>
+    <vm:MainWindowViewModel />
+  </Design.DataContext>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <!-- Menu Bar -->
+    <Menu Grid.Row="0">
+      <MenuItem Header="File">
+        <MenuItem Header="Open Container..." Command="{Binding OpenContainerCommand}" />
+        <MenuItem Header="Create Container..." Command="{Binding CreateContainerCommand}" />
+        <Separator />
+        <MenuItem Header="Exit" Click="Exit_Click" />
+      </MenuItem>
+      <MenuItem Header="Edit">
+        <MenuItem Header="Copy In..." Command="{Binding CopyInCommand}" />
+        <MenuItem Header="Copy Out..." Command="{Binding CopyOutCommand}" />
+        <MenuItem Header="Delete" Command="{Binding DeleteCommand}" />
+        <Separator />
+        <MenuItem Header="Create Directory..." Command="{Binding CreateDirectoryCommand}" />
+      </MenuItem>
+      <MenuItem Header="View">
+        <MenuItem Header="Refresh" Command="{Binding RefreshCommand}" />
+      </MenuItem>
+    </Menu>
+
+    <!-- Toolbar -->
+    <Border Grid.Row="1" Background="LightGray" Padding="5" BorderBrush="Gray" BorderThickness="0,0,0,1">
+      <StackPanel Orientation="Horizontal" Spacing="5">
+        <Button Command="{Binding GoBackCommand}" ToolTip.Tip="Back">
+          <TextBlock>◀️</TextBlock>
+        </Button>
+        <Button Command="{Binding GoForwardCommand}" ToolTip.Tip="Forward">
+          <TextBlock>▶️</TextBlock>
+        </Button>
+        <Button Command="{Binding OpenContainerCommand}" ToolTip.Tip="Open Container">
+          <TextBlock>📂</TextBlock>
+        </Button>
+        <Button Command="{Binding CreateContainerCommand}" ToolTip.Tip="Create Container">
+          <TextBlock>🆕</TextBlock>
+        </Button>
+        <Rectangle Width="1" Height="20" Fill="Gray" Margin="5,0" />
+        <Button Command="{Binding CopyInCommand}" ToolTip.Tip="Copy File In">
+          <TextBlock>📥</TextBlock>
+        </Button>
+        <Button Command="{Binding CopyOutCommand}" ToolTip.Tip="Copy File Out">
+          <TextBlock>📤</TextBlock>
+        </Button>
+        <Button Command="{Binding DeleteCommand}" ToolTip.Tip="Delete">
+          <TextBlock>🗑️</TextBlock>
+        </Button>
+        <Rectangle Width="1" Height="20" Fill="Gray" Margin="5,0" />
+        <Button Command="{Binding CreateDirectoryCommand}" ToolTip.Tip="Create Directory">
+          <TextBlock>📁</TextBlock>
+        </Button>
+        <Button Command="{Binding RefreshCommand}" ToolTip.Tip="Refresh">
+          <TextBlock>🔄</TextBlock>
+        </Button>
+      </StackPanel>
+    </Border>
+
+    <!-- Main Content Area -->
+    <Grid Grid.Row="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="250" MinWidth="150" />
+        <ColumnDefinition Width="5" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <!-- Directory Tree View -->
+      <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Padding="5">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+          
+          <TextBlock Grid.Row="0" Text="Directory Tree" FontWeight="Bold" Margin="0,0,0,5" />
+          
+          <TreeView Grid.Row="1"
+                    x:Name="DirectoryTreeView"
+                    ItemsSource="{Binding DirectoryTree}"
+                    SelectedItem="{Binding SelectedDirectory, Mode=TwoWay}"
+                    IsVisible="{Binding IsContainerOpen}">
+            <TreeView.ItemTemplate>
+              <TreeDataTemplate ItemsSource="{Binding Children}">
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="📁" Margin="0,0,5,0" />
+                  <TextBlock Text="{Binding Name}" />
+                </StackPanel>
+              </TreeDataTemplate>
+            </TreeView.ItemTemplate>
+          </TreeView>
+
+          <TextBlock Grid.Row="1" 
+                     Text="No container open" 
+                     HorizontalAlignment="Center" 
+                     VerticalAlignment="Center"
+                     Foreground="Gray"
+                     IsVisible="{Binding !IsContainerOpen}" />
+        </Grid>
+      </Border>
+
+      <!-- Splitter -->
+      <GridSplitter Grid.Column="1" Background="LightGray" />
+
+      <!-- File List View -->
+      <Border Grid.Column="2" BorderBrush="Gray" BorderThickness="1" Padding="5">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+
+          <!-- Current Path -->
+          <Border Grid.Row="0" Background="LightBlue" Padding="5" Margin="0,0,0,5">
+            <TextBlock Text="{Binding CurrentPath}" FontFamily="Consolas" />
+          </Border>
+
+          <!-- File List -->
+          <ListBox Grid.Row="1" 
+                   x:Name="FileListView"
+                   ItemsSource="{Binding Files}"
+                   SelectedItem="{Binding SelectedFile}"
+                   IsVisible="{Binding IsContainerOpen}">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="200" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+                  <TextBlock Grid.Column="0" Text="{Binding Icon}" VerticalAlignment="Center" />
+                  <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center" />
+                  <TextBlock Grid.Column="2" Text="{Binding SizeText}" VerticalAlignment="Center" />
+                  <TextBlock Grid.Column="3" Text="{Binding ModifiedDate}" VerticalAlignment="Center" />
+                </Grid>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+
+          <TextBlock Grid.Row="1" 
+                     Text="No container open" 
+                     HorizontalAlignment="Center" 
+                     VerticalAlignment="Center"
+                     Foreground="Gray"
+                     IsVisible="{Binding !IsContainerOpen}" />
+        </Grid>
+      </Border>
+    </Grid>
+
+    <!-- Status Bar -->
+    <Border Grid.Row="3" Background="LightGray" Padding="5" BorderBrush="Gray" BorderThickness="0,1,0,0">
+      <!-- Use direct bindings to ContainerInfo properties and guard visibility with IsContainerOpen
+           This avoids compile-time DataTemplate type resolution errors in Avalonia XAML. -->
+      <StackPanel Orientation="Horizontal" Spacing="20" IsVisible="{Binding IsContainerOpen}">
+        <TextBlock Text="{Binding ContainerPathText}" />
+        <TextBlock Text="{Binding UsedBlocksText}" />
+        <TextBlock Text="{Binding FreeBlocksText}" />
+        <TextBlock Text="{Binding BlockSizeText}" />
+      </StackPanel>
+    </Border>
+  </Grid>
+</Window>

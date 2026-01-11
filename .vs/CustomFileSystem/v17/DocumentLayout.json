@@ -1,0 +1,410 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{3E48509F-4AAB-4353-8A9D-96B02D192223}|FileSystem.Core\\FileSystem.Core.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.core\\directorymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E48509F-4AAB-4353-8A9D-96B02D192223}|FileSystem.Core\\FileSystem.Core.csproj|solutionrelative:filesystem.core\\directorymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E48509F-4AAB-4353-8A9D-96B02D192223}|FileSystem.Core\\FileSystem.Core.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.core\\filesystemimplementation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E48509F-4AAB-4353-8A9D-96B02D192223}|FileSystem.Core\\FileSystem.Core.csproj|solutionrelative:filesystem.core\\filesystemimplementation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E48509F-4AAB-4353-8A9D-96B02D192223}|FileSystem.Core\\FileSystem.Core.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.core\\filemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E48509F-4AAB-4353-8A9D-96B02D192223}|FileSystem.Core\\FileSystem.Core.csproj|solutionrelative:filesystem.core\\filemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\views\\mainwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\views\\mainwindow.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\Directory.Build.props||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Directory.Build.props||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\filesystem.gui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\filesystem.gui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\views\\mainwindow.axaml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\views\\mainwindow.axaml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\commands\\relaycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\commands\\relaycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\app.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\app.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\views\\mainwindow.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\views\\mainwindow.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\assets\\avalonia-logo.ico||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\assets\\avalonia-logo.ico||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\app.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\app.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\app.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\app.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\viewlocator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\viewlocator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\dialogs\\createdirectorydialog.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\dialogs\\createdirectorydialog.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\dialogs\\createdirectorydialog.axaml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\dialogs\\createdirectorydialog.axaml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\dialogs\\createcontainerdialog.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\dialogs\\createcontainerdialog.axaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\dialogs\\createcontainerdialog.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\dialogs\\createcontainerdialog.axaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.gui\\viewmodels\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{405C2B71-C470-41D3-950A-1308497B12CC}|FileSystem.GUI\\FileSystem.GUI.csproj|solutionrelative:filesystem.gui\\viewmodels\\viewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E48509F-4AAB-4353-8A9D-96B02D192223}|FileSystem.Core\\FileSystem.Core.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.core\\ifilesystemapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E48509F-4AAB-4353-8A9D-96B02D192223}|FileSystem.Core\\FileSystem.Core.csproj|solutionrelative:filesystem.core\\ifilesystemapi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E48509F-4AAB-4353-8A9D-96B02D192223}|FileSystem.Core\\FileSystem.Core.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.core\\containermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E48509F-4AAB-4353-8A9D-96B02D192223}|FileSystem.Core\\FileSystem.Core.csproj|solutionrelative:filesystem.core\\containermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{62F0C422-246F-4C25-85B0-E519DBE9FFA0}|FileSystem.CLI\\FileSystem.CLI.csproj|c:\\users\\lubenstefano\\desktop\\customfilesystem - final\\filesystem.cli\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{62F0C422-246F-4C25-85B0-E519DBE9FFA0}|FileSystem.CLI\\FileSystem.CLI.csproj|solutionrelative:filesystem.cli\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MainWindow.axaml",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Views\\MainWindow.axaml",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\Views\\MainWindow.axaml",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Views\\MainWindow.axaml",
+              "RelativeToolTip": "FileSystem.GUI\\Views\\MainWindow.axaml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACkAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-12-29T19:12:02.298Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "RelayCommand.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Commands\\RelayCommand.cs",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\Commands\\RelayCommand.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Commands\\RelayCommand.cs",
+              "RelativeToolTip": "FileSystem.GUI\\Commands\\RelayCommand.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:47:51.353Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Program.cs",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\Program.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Program.cs",
+              "RelativeToolTip": "FileSystem.GUI\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:54:29.756Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "app.manifest",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\app.manifest",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\app.manifest",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\app.manifest",
+              "RelativeToolTip": "FileSystem.GUI\\app.manifest",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001203|",
+              "WhenOpened": "2025-12-23T23:54:29.669Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MainWindow.axaml.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Views\\MainWindow.axaml.cs",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\Views\\MainWindow.axaml.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Views\\MainWindow.axaml.cs",
+              "RelativeToolTip": "FileSystem.GUI\\Views\\MainWindow.axaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:47:51.698Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "avalonia-logo.ico",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Assets\\avalonia-logo.ico",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\Assets\\avalonia-logo.ico",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Assets\\avalonia-logo.ico",
+              "RelativeToolTip": "FileSystem.GUI\\Assets\\avalonia-logo.ico",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001525|",
+              "WhenOpened": "2025-12-23T23:54:29.94Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FileManager.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.Core\\FileManager.cs",
+              "RelativeDocumentMoniker": "FileSystem.Core\\FileManager.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.Core\\FileManager.cs",
+              "RelativeToolTip": "FileSystem.Core\\FileManager.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAIwAQAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:11:42.566Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FileSystemImplementation.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.Core\\FileSystemImplementation.cs",
+              "RelativeDocumentMoniker": "FileSystem.Core\\FileSystemImplementation.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.Core\\FileSystemImplementation.cs",
+              "RelativeToolTip": "FileSystem.Core\\FileSystemImplementation.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAgwAMAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:11:41.857Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DirectoryManager.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.Core\\DirectoryManager.cs",
+              "RelativeDocumentMoniker": "FileSystem.Core\\DirectoryManager.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.Core\\DirectoryManager.cs",
+              "RelativeToolTip": "FileSystem.Core\\DirectoryManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:04:05.354Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MainWindow.axaml",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Views\\MainWindow.axaml",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\Views\\MainWindow.axaml",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Views\\MainWindow.axaml",
+              "RelativeToolTip": "FileSystem.GUI\\Views\\MainWindow.axaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-12-23T23:47:51.536Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MainWindowViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\ViewModels\\MainWindowViewModel.cs",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\ViewModels\\MainWindowViewModel.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\ViewModels\\MainWindowViewModel.cs",
+              "RelativeToolTip": "FileSystem.GUI\\ViewModels\\MainWindowViewModel.cs",
+              "ViewState": "AgIAAEIBAAAAAAAAAAAWwFMBAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:47:51.819Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FileSystem.GUI.csproj",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\FileSystem.GUI.csproj",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\FileSystem.GUI.csproj",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\FileSystem.GUI.csproj",
+              "RelativeToolTip": "FileSystem.GUI\\FileSystem.GUI.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-12-23T23:44:57.669Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "App.axaml",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\App.axaml",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\App.axaml",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\App.axaml",
+              "RelativeToolTip": "FileSystem.GUI\\App.axaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-12-23T23:50:04.447Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Directory.Build.props",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\Directory.Build.props",
+              "RelativeDocumentMoniker": "Directory.Build.props",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\Directory.Build.props",
+              "RelativeToolTip": "Directory.Build.props",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2025-12-23T23:56:37.938Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "App.axaml.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\App.axaml.cs",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\App.axaml.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\App.axaml.cs",
+              "RelativeToolTip": "FileSystem.GUI\\App.axaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:52:53.523Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ViewLocator.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\ViewLocator.cs",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\ViewLocator.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\ViewLocator.cs",
+              "RelativeToolTip": "FileSystem.GUI\\ViewLocator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:51:06.715Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "CreateDirectoryDialog.axaml.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Dialogs\\CreateDirectoryDialog.axaml.cs",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\Dialogs\\CreateDirectoryDialog.axaml.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Dialogs\\CreateDirectoryDialog.axaml.cs",
+              "RelativeToolTip": "FileSystem.GUI\\Dialogs\\CreateDirectoryDialog.axaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:47:52.487Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "CreateDirectoryDialog.axaml",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Dialogs\\CreateDirectoryDialog.axaml",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\Dialogs\\CreateDirectoryDialog.axaml",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Dialogs\\CreateDirectoryDialog.axaml",
+              "RelativeToolTip": "FileSystem.GUI\\Dialogs\\CreateDirectoryDialog.axaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-12-23T23:47:52.293Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "CreateContainerDialog.axaml.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Dialogs\\CreateContainerDialog.axaml.cs",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\Dialogs\\CreateContainerDialog.axaml.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Dialogs\\CreateContainerDialog.axaml.cs",
+              "RelativeToolTip": "FileSystem.GUI\\Dialogs\\CreateContainerDialog.axaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:47:52.137Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "CreateContainerDialog.axaml",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Dialogs\\CreateContainerDialog.axaml",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\Dialogs\\CreateContainerDialog.axaml",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\Dialogs\\CreateContainerDialog.axaml",
+              "RelativeToolTip": "FileSystem.GUI\\Dialogs\\CreateContainerDialog.axaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-12-23T23:47:52.026Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ViewModelBase.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\ViewModels\\ViewModelBase.cs",
+              "RelativeDocumentMoniker": "FileSystem.GUI\\ViewModels\\ViewModelBase.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.GUI\\ViewModels\\ViewModelBase.cs",
+              "RelativeToolTip": "FileSystem.GUI\\ViewModels\\ViewModelBase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:47:50.732Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "IFileSystemAPI.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.Core\\IFileSystemAPI.cs",
+              "RelativeDocumentMoniker": "FileSystem.Core\\IFileSystemAPI.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.Core\\IFileSystemAPI.cs",
+              "RelativeToolTip": "FileSystem.Core\\IFileSystemAPI.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:11:41.039Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "ContainerManager.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.Core\\ContainerManager.cs",
+              "RelativeDocumentMoniker": "FileSystem.Core\\ContainerManager.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.Core\\ContainerManager.cs",
+              "RelativeToolTip": "FileSystem.Core\\ContainerManager.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBUAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T23:04:05.055Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.CLI\\Program.cs",
+              "RelativeDocumentMoniker": "FileSystem.CLI\\Program.cs",
+              "ToolTip": "C:\\Users\\LubenStefano\\Desktop\\CustomFileSystem - Final\\FileSystem.CLI\\Program.cs",
+              "RelativeToolTip": "FileSystem.CLI\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEBAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-23T22:51:42.095Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

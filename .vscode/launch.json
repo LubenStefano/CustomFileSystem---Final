@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run FileSystem.CLI (Debug)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/FileSystem.CLI/bin/Debug/net8.0/FileSystem.CLI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/FileSystem.CLI",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Run FileSystem.GUI (Debug)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/FileSystem.GUI/bin/Debug/net8.0/FileSystem.GUI.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/FileSystem.GUI",
+            "stopAtEntry": false,
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Attach to .NET Process",
+            "type": "coreclr",
+            "request": "attach"
+        }
+    ]
+}

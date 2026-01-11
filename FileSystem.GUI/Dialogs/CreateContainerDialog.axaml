@@ -1,0 +1,87 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="FileSystem.GUI.Dialogs.CreateContainerDialog"
+        Title="Create New Container"
+        Width="500" Height="350"
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Text="Create New Container" 
+                   FontSize="16" FontWeight="Bold" 
+                   Margin="0,0,0,20"/>
+
+        <!-- Form -->
+        <StackPanel Grid.Row="1" Spacing="15">
+            <!-- File Path -->
+            <StackPanel>
+                <TextBlock Text="Container File Path:" Margin="0,0,0,5"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" x:Name="PathTextBox" 
+                             Watermark="Select where to save the container file"/>
+                    <Button Grid.Column="1" Content="Browse..." 
+                            x:Name="BrowseButton" 
+                            Margin="5,0,0,0" 
+                            MinWidth="80"/>
+                </Grid>
+            </StackPanel>
+
+            <!-- Block Size -->
+            <StackPanel>
+                <TextBlock Text="Block Size (bytes):" Margin="0,0,0,5"/>
+                <ComboBox x:Name="BlockSizeComboBox" SelectedIndex="0">
+                    <ComboBoxItem Content="1024"/>
+                    <ComboBoxItem Content="2048"/>
+                    <ComboBoxItem Content="4096"/>
+                    <ComboBoxItem Content="8192"/>
+                </ComboBox>
+                <TextBlock x:Name="RecommendedText" Text="Recommended: 4096 bytes" 
+                           FontSize="10" 
+                           Foreground="Gray" 
+                           Margin="0,2,0,0"/>
+            </StackPanel>
+
+            <!-- Total Blocks -->
+            <StackPanel>
+                <TextBlock Text="Total Blocks:" Margin="0,0,0,5"/>
+                <NumericUpDown x:Name="TotalBlocksNumeric" 
+                               Value="1000" 
+                               Minimum="100" 
+                               Maximum="100000"
+                               Increment="100"/>
+                <TextBlock x:Name="SizeIndicator" 
+                           Text="Container Size: ~4 MB" 
+                           FontSize="10" 
+                           Foreground="Gray" 
+                           Margin="0,2,0,0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    Spacing="10" 
+                    Margin="0,20,0,0">
+            <Button Content="Create" 
+                    x:Name="CreateButton" 
+                    MinWidth="80" 
+                    IsDefault="True"/>
+            <Button Content="Cancel" 
+                    x:Name="CancelButton" 
+                    MinWidth="80" 
+                    IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>

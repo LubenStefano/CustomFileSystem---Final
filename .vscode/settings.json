@@ -1,0 +1,8 @@
+{
+    "dotnet.defaultSolution": "CustomFileSystem.sln",
+    "omnisharp.defaultLaunchSolution": "CustomFileSystem.sln",
+    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+    "csharp.semanticHighlighting.enabled": true,
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.enableRoslynAnalyzers": true
+}

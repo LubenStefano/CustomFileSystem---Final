@@ -1,0 +1,11 @@
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\bin\Debug\net8.0\FileSystem.Core.deps.json
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\bin\Debug\net8.0\FileSystem.Core.dll
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\bin\Debug\net8.0\FileSystem.Core.pdb
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\obj\Debug\net8.0\FileSystem.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\obj\Debug\net8.0\FileSystem.Core.AssemblyInfoInputs.cache
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\obj\Debug\net8.0\FileSystem.Core.AssemblyInfo.cs
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\obj\Debug\net8.0\FileSystem.Core.csproj.CoreCompileInputs.cache
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\obj\Debug\net8.0\FileSystem.Core.dll
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\obj\Debug\net8.0\refint\FileSystem.Core.dll
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\obj\Debug\net8.0\FileSystem.Core.pdb
+C:\Users\LubenStefano\Desktop\CustomFileSystem - Final\FileSystem.Core\obj\Debug\net8.0\ref\FileSystem.Core.dll
