@@ -2,6 +2,7 @@ namespace FileSystem.Core
 {
     public static class Layout
     {
+        // Header
         public const int SuperblockSize = 20;
         public const int JournalSize = 4;
 

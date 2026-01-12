@@ -348,7 +348,7 @@ namespace FileSystem.Core
                             }
                         }
 
-                        try { _fileManager.DeleteFileEntry(journalInode); } catch { }
+                        try {_fileManager.DeleteFileEntry(journalInode); } catch { }
                         try { _directoryManager.RemoveChildFromDirectory(0, journalInode); } catch { }
                     }
 

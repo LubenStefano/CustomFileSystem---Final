@@ -18,6 +18,12 @@ namespace FileSystem.Core
             _totalBlocks = totalBlocks;
         }
 
+        private void ValidateBlockIndex(int blockIndex)
+        {
+            if (blockIndex < 0 || blockIndex >= _totalBlocks)
+                throw new ArgumentOutOfRangeException(nameof(blockIndex));
+        }
+
         public int FindFreeBlock()
         {
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.ReadWrite);
@@ -25,7 +31,12 @@ namespace FileSystem.Core
 
             for (int i = 0; i < _totalBlocks; i++)
             {
-                fs.Seek(TableOffset + i * EntrySize, SeekOrigin.Begin);
+                long metaPos = TableOffset + i * EntrySize;
+
+                // If the metadata area for this entry is beyond file length, stop.
+                if (metaPos + EntrySize > fs.Length) break;
+
+                fs.Seek(metaPos, SeekOrigin.Begin);
 
                 byte isUsed = br.ReadByte();
 
@@ -40,10 +51,15 @@ namespace FileSystem.Core
 
         public void Allocate(int blockIndex)
         {
+            ValidateBlockIndex(blockIndex);
+
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.Write);
             using var bw = new BinaryWriter(fs);
 
-            fs.Seek(TableOffset + blockIndex * EntrySize, SeekOrigin.Begin);
+            long metaPos = TableOffset + blockIndex * EntrySize;
+            if (metaPos + EntrySize > fs.Length) throw new IOException("Block table area is truncated");
+
+            fs.Seek(metaPos, SeekOrigin.Begin);
 
             bw.Write((byte)1);  // isUsed
             bw.Write(1);        // refcount
@@ -55,25 +71,47 @@ namespace FileSystem.Core
 
         public void Deallocate(int blockIndex)
         {
-            using var fs = new FileStream(_path, FileMode.Open, FileAccess.Write);
-            using var bw = new BinaryWriter(fs);
+            ValidateBlockIndex(blockIndex);
 
-            fs.Seek(TableOffset + blockIndex * EntrySize, SeekOrigin.Begin);
+            using (var fs = new FileStream(_path, FileMode.Open, FileAccess.Write))
+            using (var bw = new BinaryWriter(fs))
+            {
+                long dataPos = GetDataOffset(blockIndex);
+                if (dataPos + _blockSize <= fs.Length)
+                {
+                    fs.Seek(dataPos, SeekOrigin.Begin);
 
-            bw.Write((byte)0);
-            bw.Write(0);
-            bw.Write((uint)0);
+                    bw.Write(new byte[_blockSize]);
+                    
+                    bw.Flush();
+                    fs.Flush();
+                }
 
-            bw.Flush();
-            fs.Flush();
+                long metaPos = TableOffset + blockIndex * EntrySize;
+
+                if (metaPos + EntrySize > fs.Length) throw new IOException("Block table area is truncated");
+
+                fs.Seek(metaPos, SeekOrigin.Begin);
+                bw.Write((byte)0);
+                bw.Write(0);
+                bw.Write((uint)0);
+
+                bw.Flush();
+                fs.Flush();
+            }
         }
 
         public void SetChecksum(int blockIndex, uint checksum)
         {
+            ValidateBlockIndex(blockIndex);
+
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.Write);
             using var bw = new BinaryWriter(fs);
 
-            fs.Seek(TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryChecksumOffset, SeekOrigin.Begin);
+            long metaPos = TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryChecksumOffset;
+            if (metaPos + sizeof(uint) > fs.Length) throw new IOException("Block table area is truncated");
+
+            fs.Seek(metaPos, SeekOrigin.Begin);
 
             bw.Write(checksum);
             bw.Flush();
@@ -83,10 +121,15 @@ namespace FileSystem.Core
 
         public int GetRefCount(int blockIndex)
         {
+            ValidateBlockIndex(blockIndex);
+
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.Read);
             using var br = new BinaryReader(fs);
 
-            fs.Seek(TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryRefCountOffset, SeekOrigin.Begin);
+            long metaPos = TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryRefCountOffset;
+            if (metaPos + sizeof(int) > fs.Length) throw new IOException("Block table area is truncated");
+
+            fs.Seek(metaPos, SeekOrigin.Begin);
 
             return br.ReadInt32();
         }
@@ -98,7 +141,10 @@ namespace FileSystem.Core
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.Write);
             using var bw = new BinaryWriter(fs);
 
-            fs.Seek(TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryRefCountOffset, SeekOrigin.Begin);
+            long metaPos = TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryRefCountOffset;
+            if (metaPos + sizeof(int) > fs.Length) throw new IOException("Block table area is truncated");
+
+            fs.Seek(metaPos, SeekOrigin.Begin);
 
             bw.Write(current + 1);
             bw.Flush();
@@ -114,7 +160,9 @@ namespace FileSystem.Core
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.Write);
 
             using var bw = new BinaryWriter(fs);
-            fs.Seek(TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryRefCountOffset, SeekOrigin.Begin);
+            long metaPos = TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryRefCountOffset;
+            if (metaPos + sizeof(int) > fs.Length) throw new IOException("Block table area is truncated");
+            fs.Seek(metaPos, SeekOrigin.Begin);
 
             bw.Write(updated);
             bw.Flush();
@@ -128,6 +176,9 @@ namespace FileSystem.Core
         {
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.Read);
             using var br = new BinaryReader(fs);
+
+            if (data == null) throw new ArgumentNullException(nameof(data));
+            if (validLength <= 0 || validLength > _blockSize) return -1;
 
             for (int i = 0; i < _totalBlocks; i++)
             {
@@ -166,10 +217,15 @@ namespace FileSystem.Core
 
         public uint GetChecksum(int blockIndex)
         {
+            ValidateBlockIndex(blockIndex);
+
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.Read);
             using var br = new BinaryReader(fs);
 
-            fs.Seek(TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryChecksumOffset, SeekOrigin.Begin);
+            long metaPos = TableOffset + blockIndex * EntrySize + Layout.BlockTableEntryChecksumOffset;
+            if (metaPos + sizeof(uint) > fs.Length) throw new IOException("Block table area is truncated");
+
+            fs.Seek(metaPos, SeekOrigin.Begin);
 
             return br.ReadUInt32();
         }
@@ -203,39 +259,43 @@ namespace FileSystem.Core
 
         public long GetDataOffset(int blockIndex)
         {
+            ValidateBlockIndex(blockIndex);
             return Layout.GetDataOffset(blockIndex, _totalBlocks, _blockSize);
         }
 
         public void WriteBlockData(int blockIndex, byte[] data, int offset = 0)
         {
+            ValidateBlockIndex(blockIndex);
+            if (data == null) throw new ArgumentNullException(nameof(data));
+            if (offset < 0 || offset >= _blockSize) throw new ArgumentOutOfRangeException(nameof(offset));
+
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.Write);
 
             long dataOffset = GetDataOffset(blockIndex);
             fs.Seek(dataOffset + offset, SeekOrigin.Begin);
 
             int bytesToWrite = Math.Min(data.Length, _blockSize - offset);
-            fs.Write(data, 0, bytesToWrite);
+            if (bytesToWrite > 0) fs.Write(data, 0, bytesToWrite);
         }
 
         public byte[] ReadBlockData(int blockIndex)
         {
+            ValidateBlockIndex(blockIndex);
+
             using var fs = new FileStream(_path, FileMode.Open, FileAccess.Read);
 
             long dataOffset = GetDataOffset(blockIndex);
 
-            if (dataOffset >= fs.Length) return new byte[_blockSize];
+            byte[] buffer = new byte[_blockSize];
+            if (dataOffset >= fs.Length) return buffer;
 
             fs.Seek(dataOffset, SeekOrigin.Begin);
 
-            byte[] buffer = new byte[_blockSize];
             int bytesRead = fs.Read(buffer, 0, _blockSize);
 
             if (bytesRead < _blockSize)
             {
-                for (int i = bytesRead; i < _blockSize; i++)
-                {
-                    buffer[i] = 0;
-                }
+                for (int i = bytesRead; i < _blockSize; i++) buffer[i] = 0;
             }
 
             return buffer;
